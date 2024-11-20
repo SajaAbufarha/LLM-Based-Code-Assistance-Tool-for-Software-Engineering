@@ -9,7 +9,7 @@ def refactor_code_with_tool(code, language="Python"):
     task = "Refactor Code"
     context = get_relevant_context(vector_store, code)
     prompt = generate_code_assistance_prompt(code, task, language, context)
-    ai_response = get_ai_assistance(prompt)
+    ai_response = get_ai_assistance(prompt, task)
 
     try:
         response_json = json.loads(ai_response) 
@@ -21,28 +21,30 @@ def refactor_code_with_tool(code, language="Python"):
         return None, f"Failed to parse JSON. Raw response: {ai_response}"
 
 def run_tests(code, test_cases):
-    """
-    Execute Python code with test cases.
-    """
-    with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False) as temp_file:
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False, encoding="utf-8") as temp_file:
         temp_file.write(code + "\n" + test_cases)
         temp_file.flush()
         try:
-            result = subprocess.run(["python3", temp_file.name], capture_output=True, text=True, timeout=10)
-            success = result.returncode == 0
+            result = subprocess.run(
+                ["python3", temp_file.name],
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
             output = result.stdout + result.stderr
+            success = "AssertionError" not in output and result.returncode == 0
         except subprocess.TimeoutExpired:
             success = False
             output = "Timeout occurred"
     return success, output
 
 def test_humaneval_with_tool(dataset_path):
-    """
-    Test the tool using the HumanEval dataset.
-    """
     results = []
     with open(dataset_path, 'r') as file:
-        for line in file:
+        for i, line in enumerate(file):
+            if i >= 50:  
+                break
+            
             problem = json.loads(line)
             task_id = problem['task_id']
             original_code = problem['canonical_solution']

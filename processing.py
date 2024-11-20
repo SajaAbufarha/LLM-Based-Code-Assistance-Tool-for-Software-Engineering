@@ -10,15 +10,36 @@ import json
 load_dotenv()
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-SYSTEM_PROMPT = """You are a helpful assistant for software engineers. 
-You are given textbooks that outline foundational principles for code testing, refactoring, and other essential practices. 
+
+
+
+SYSTEM_PROMPT_R = """You are a helpful assistant for software engineers. 
+You are given textbooks that outline foundational principles for code testing and refactoring. 
 Use the textbooks as a guide for providing feedback that is both grounded in these principles and specifically tailored to the given code.
 
 Key Guidelines:
 - Use textbook principles solely as inspiration or guidelines for your tests or refactored code.
 - Do not refer to any specific examples or cases within the textbooks; instead, focus only on broad principles.
-
+Provide output in valid JSON but do not parse it in ```json ```. The data schema should only be like this:
+            {
+                "code": "Refactored code with inline comments",
+                "explanation": "High-level explanation of code changes or improvements"
+            }
 """
+SYSTEM_PROMPT_T = """You are a helpful assistant for software engineers. 
+You are given textbooks that outline foundational principles for code testing and refactoring. 
+Use the textbooks as a guide for providing feedback that is both grounded in these principles and specifically tailored to the given code.
+
+Key Guidelines:
+- Use textbook principles solely as inspiration or guidelines for your tests or refactored code.
+- Do not refer to any specific examples or cases within the textbooks; instead, focus only on broad principles.
+Provide output in valid JSON but do not parse it in ```json ```. The data schema should only be like this:
+            {
+                "test": "Unit test checking the behavior of individual units of code in isolation",
+                "explanation": "High-level explanation of code changes or improvements"
+            }
+"""
+
 
 def load_pdfs_from_backend(folder_path: str) -> List[str]:
     documents = []
@@ -55,28 +76,15 @@ def generate_code_assistance_prompt(code, task, language="Python", context=None)
         prompt = f"""
             The following is a {language} code snippet:
                 {code}
-                Refactor the code to improve readability and maintainability               
-                Please provide your response in JSON format as shown below:
-            {{
-                "code": "Refactored code with inline comments",
-                "explanation": "High-level explanation of code changes or improvements"
-            }}
+                Refactor the code to improve readability, maintainability, and performance while ensuring its functionality remains the same. 
+                Apply best practices, optimize for efficiency, and include comments that explain key sections of the code.              
             """
             
-  
-        
-        
     elif task == "Generate Tests":
         prompt =  f"""
             The following is a {language} code snippet:
                 {code}
-                Please write unit tests for the above code to ensure its proper functioning 
-                               
-                Please provide your response in JSON format as shown below:
-            {{
-                "tests": "Unit tests checking the behavior of individual units of code in isolation",
-                "explanation": "High-level explanation of code changes or improvements"
-            }}
+                Please write unit tests for the above code to ensure its proper functioning             
             """
     else:
         prompt += "Invalid task selected."
@@ -87,18 +95,33 @@ def generate_code_assistance_prompt(code, task, language="Python", context=None)
         
     return prompt
 
-def get_ai_assistance(prompt):
+def get_ai_assistance(prompt, task):
     try:
-        completion = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+        if task == "Refactor Code":
+            completion = openai.ChatCompletion.create(
+            model="gpt-4o-2024-08-06",
+            response_format={"type":"json_object"},
             messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "system", "content": SYSTEM_PROMPT_R},
+                    {"role": "user", "content": prompt},
+                ]
+            )
+            response = completion['choices'][0]['message']['content']
+            
+            print("Raw AI Response:\n", response)  # debug
+            return response
+        else: 
+            completion = openai.ChatCompletion.create(
+            model="gpt-4o-2024-08-06",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT_T},
                 {"role": "user", "content": prompt},
-            ]
-        )
-        response = completion['choices'][0]['message']['content']
-        print("Raw AI Response:\n", response)  # debug
-        return response
+                ]
+            )
+            response = completion['choices'][0]['message']['content']
+            
+            print("Raw AI Response:\n", response)  # debug
+            return response
     except Exception as e:
         print("Error in AI Assistance:", str(e))
         return f"Error: {str(e)}"

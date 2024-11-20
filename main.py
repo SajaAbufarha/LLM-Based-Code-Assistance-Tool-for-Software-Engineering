@@ -22,10 +22,11 @@ def main():
                 context = get_relevant_context(vector_store, code)
                 prompt = generate_code_assistance_prompt(code, task, language, context)
                 
-                ai_response = get_ai_assistance(prompt)
+                ai_response = get_ai_assistance(prompt, task)
                 
                 try:
                     response_json = json.loads(ai_response)
+                    print(response_json, task)
                     st.success(f"{task} Completed!")
 
                     if task == "Refactor Code" and "code" in response_json:
@@ -34,11 +35,23 @@ def main():
                         st.subheader("Explanation")
                         st.write(response_json["explanation"])
 
-                    if "tests" in response_json and task == "Generate Tests":
+                   
+                        
+                    if  task == "Generate Tests":
                         st.subheader("Unit Test Suggestions")
-                        st.code(response_json["tests"], language=language.lower())
-                        st.subheader("Explanation")
-                        st.write(response_json["explanation"])
+                        # Ensure proper handling of code blocks for test cases
+                        try:
+                            print("response ", response_json["test"])
+                            st.code(response_json["test"], language=language.lower())
+                        except Exception as e:
+                            st.error(f"Error displaying the tests: {e}")
+                        
+                        # Provide explanation for the tests
+                        if "explanation" in response_json:
+                            st.subheader("Explanation")
+                            st.write(response_json["explanation"])
+                        else:
+                            st.warning("No explanation provided for the test cases.")
 
                 except json.JSONDecodeError:
                     st.error("Failed to parse the response. Please try again.")
