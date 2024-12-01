@@ -5,6 +5,11 @@ from processing import initialize_vectorstore, generate_code_assistance_prompt, 
 
 vector_store = initialize_vectorstore()
 
+def save_metrics_to_file(metrics, filename):
+    with open(filename, 'w') as file:
+        json.dump(metrics, file, indent=4)
+    print(f"Metrics saved to {filename}")
+    
 def refactor_code_with_tool(code, language="Python"):
     task = "Refactor Code"
     context = get_relevant_context(vector_store, code)
@@ -37,7 +42,7 @@ def test_humaneval_with_tool(dataset_path):
     results = []
     with open(dataset_path, 'r') as file:
         for i, line in enumerate(file):
-            if i >= 10:  
+            if i >= 164:  
                 break
             
             print("=============================================================")
@@ -145,6 +150,11 @@ def calculate_results(results):
 
 
 metrics = calculate_results(results)
+refactored_code_metrics = {
+    "Total Correctness Score": metrics["Code Correctness (Passed Tasks)"],
+    "Average Code Correctness": metrics["Average Code Correctness"]
+}
+save_metrics_to_file(refactored_code_metrics, "refactored_code_evaluation.json")
 
 for key, value in metrics.items():
     print(f"{key}: {value:.2f}%")

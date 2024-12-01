@@ -35,9 +35,9 @@ Key Guidelines:
 - Do not refer to any specific examples or cases within the textbooks; instead, focus only on broad principles.
 Provide output in valid JSON but do not parse it in ```json ```. The data schema should only be like this:
             {
-                "test": "Unit test checking the behavior of individual units of code in isolation",
+                "test": "Test code as a complete, runnable Python script. ",
                 "explanation": "High-level explanation of code changes or improvements"
-            }
+            } 
 """
 
 
@@ -84,10 +84,14 @@ def generate_code_assistance_prompt(code, task, language="Python", context=None)
         prompt =  f"""
             The following is a {language} code snippet:
                 {code}
-                Please write unit tests for the above code to ensure its proper functioning             
-            """
+                Write Python unit tests using the unittest framework. Ensure the tests:
+                - Validate the correctness of the function's output for multiple input cases.
+                - Cover edge cases and common errors.
+                - Include proper assertions (e.g., assertEqual, assertRaises) for each case.                
+                The output should be a complete, runnable Python script with proper imports and a test runner.
+                """
     else:
-        prompt += "Invalid task selected."
+        prompt = "Invalid task selected."
         
         
     if context:
