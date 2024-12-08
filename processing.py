@@ -84,11 +84,11 @@ def generate_code_assistance_prompt(code, task, language="Python", context=None)
         prompt =  f"""
             The following is a {language} code snippet:
                 {code}
-                Write Python unit tests using the unittest framework. Ensure the tests:
+                Write {code} unit tests using the unittest framework. Ensure the tests:
                 - Validate the correctness of the function's output for multiple input cases.
                 - Cover edge cases and common errors.
                 - Include proper assertions (e.g., assertEqual, assertRaises) for each case.                
-                The output should be a complete, runnable Python script with proper imports and a test runner.
+                The output should be a complete, runnable {code} script with proper imports and a test runner.
                 """
     else:
         prompt = "Invalid task selected."

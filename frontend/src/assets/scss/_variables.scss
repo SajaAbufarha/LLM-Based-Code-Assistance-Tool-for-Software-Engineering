@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.cdnfonts.com/css/draxel');
+
+@font-face {
+    font-family: "NeueMontreal";
+    src: url('/src/assets/fonts/NeueMontreal-Light.ttf');
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "NeueMontreal";
+    src: url('/src/assets/fonts/NeueMontreal-Regular.ttf');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "NeueMontreal";
+    src: url('/src/assets/fonts/NeueMontreal-Medium.ttf');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "NeueMontreal";
+    src: url('/src/assets/fonts/NeueMontreal-Bold.ttf');
+    font-weight: 700;
+}
+
+$font-1: "NeueMontreal";
+$white: #fff;
+$black: #000;
+$primary: #FF3030;
+$secondary: #6DDDFF;
+$text: #C0C3C5;
+$bg: #212128;
+
+:root {
+    scroll-behavior: auto !important;
+}

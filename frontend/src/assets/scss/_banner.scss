@@ -1,0 +1,105 @@
+.banner {
+    background-image: url(../img/banner-bg.jpg);
+    background-size: 100% 100%;
+    padding-top: 150px;
+    padding-bottom: 40px;
+    background-position: center;
+    @include xl {
+        padding-top: 150px;
+    }
+    @include lg {
+        padding-top: 120px;
+    }
+    @include mmd {
+        padding-top: 100px;
+        padding-bottom: 30px;
+    }
+    @include sm {
+        padding-top: 50px;
+        padding-bottom: 20px;
+    }
+    &-cards {
+        @include lg {
+            margin-bottom: 20px;
+        }
+        @include md {
+            margin-bottom: 20px;
+        }
+        @include sm {
+            margin-bottom: 20px;
+        }
+        &:nth-child(2) {
+            & .banner-card {
+                background-image: unset;
+                background-color: #2A2A36;
+            }
+        }
+        &:nth-child(3) {
+            & .banner-card {
+                background-image: linear-gradient(#2A2A36, #2A2A36), linear-gradient(to left, #664798, #202028);
+            }
+        }
+    }
+    &-card {
+        border: double 1px transparent;
+        background-image: linear-gradient(#2A2A36, #2A2A36), linear-gradient(to right, #664798, #202028);
+        background-origin: border-box;
+        background-clip: content-box, border-box;
+    }
+    &-content {
+        max-width: 1073px;
+        margin: 0 auto;
+        margin-bottom: 167px;
+        @include xl {
+            margin-bottom: 150px;
+        }
+        @include lg {
+            margin-bottom: 120px;
+        }
+        @include md {
+            margin-bottom: 80px;
+        }
+        @include sm {
+            margin-bottom: 50px;
+        }
+        & h1 {
+            font-size: 100px;
+            @include xl {
+                font-size: 80px;
+            }
+            @include lg {
+                font-size: 70px;
+            }
+            @include md {
+                font-size: 60px;
+            }
+            @include sm {
+                font-size: 35px;
+            }
+            @include ssm {
+                font-size: 30px;
+            }
+        }
+        & p {
+            @include md {
+                max-width: 80%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    }
+    & .shape {
+        @include xl {
+            max-width: 57%;
+            top: 53%;
+        }
+        @include lg {
+            max-width: 65%;
+            top: 45%;
+        }
+        @include mmd {
+            max-width: 65%;
+            top: 42%;
+        }
+    }
+}

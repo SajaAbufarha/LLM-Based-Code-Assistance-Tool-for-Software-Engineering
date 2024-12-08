@@ -1,0 +1,41 @@
+@keyframes headerAnimation {
+    0% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.logo {
+    cursor: pointer;
+}
+
+.heading {
+    background-color: transparent;
+    padding: var(--navbar-padding-y) 0;
+    --navbar-padding-y: 30px;
+    @include md {
+        --navbar-padding-y: 24px;
+    }
+    @include sm {
+        --navbar-padding-y: 20px;
+    }
+    & .active {
+        position: relative;
+        z-index: 1;
+        opacity: 1;
+        &::after {
+            position: absolute;
+            bottom: -7px;
+            left: 50%;
+            transform: translateX(-50%);
+            --size: 4px;
+            width: var(--size);
+            height: var(--size);
+            background-color: #E9FE09;
+            content: '';
+            border-radius: 100%;
+        }
+    }
+}

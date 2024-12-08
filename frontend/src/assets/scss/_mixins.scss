@@ -1,0 +1,275 @@
+@mixin transition {
+    transition: all .3s ease-in-out;
+}
+
+@mixin font-158 {
+    font-size: 158px;
+    line-height: normal;
+
+    @include xxl {
+        font-size: 120px;
+    }
+
+    @include xl {
+        font-size: 80px;
+    }
+
+    @include lg {
+        font-size: 60px;
+    }
+
+    @include md {
+        font-size: 50px;
+    }
+
+    @include sm {
+        font-size: 40px;
+    }
+
+    @include ssm {
+        font-size: 35px;
+    }
+}
+
+
+@mixin font-129 {
+    font-size: 129px;
+    line-height: 120%;
+
+    @include xxl {
+        font-size: 100px;
+    }
+
+    @include xl {
+        font-size: 80px;
+    }
+
+    @include lg {
+        font-size: 60px;
+    }
+
+    @include md {
+        font-size: 50px;
+    }
+
+    @include sm {
+        font-size: 40px;
+    }
+
+    @include ssm {
+        font-size: 35px;
+    }
+}
+
+@mixin font-121 {
+    font-size: 121px;
+    line-height: 120%;
+
+    @include xxl {
+        font-size: 84px;
+    }
+
+    @include xl {
+        font-size: 66px;
+    }
+
+    @include lg {
+        font-size: 60px;
+    }
+
+    @include md {
+        font-size: 44px;
+    }
+
+    @include sm {
+        font-size: 32px;
+    }
+
+    @include ssm {
+        font-size: 26px;
+    }
+}
+@mixin font-100 {
+    font-size: 100px;
+    line-height: normal;
+
+    @include xxl {
+        font-size: 84px;
+    }
+
+    @include xl {
+        font-size: 66px;
+    }
+
+    @include lg {
+        font-size: 60px;
+    }
+
+    @include md {
+        font-size: 44px;
+    }
+
+    @include sm {
+        font-size: 32px;
+    }
+
+    @include ssm {
+        font-size: 26px;
+    }
+}
+
+@mixin font-56 {
+    font-size: 56px;
+    line-height: 120%;
+
+    @include xl {
+        font-size: 52px;
+    }
+
+    @include lg {
+        font-size: 42px;
+    }
+
+    @include md {
+        font-size: 35px;
+    }
+
+    @include sm {
+        font-size: 24px;
+    }
+}
+
+@mixin font-38 {
+    font-size: 38px;
+    line-height:150%;
+    @include xl {
+        font-size: 34px;
+    }
+    @include lg {
+        font-size: 30px;
+    }
+    @include md {
+        font-size: 26px;
+    }
+    @include sm {
+        font-size: 24px;
+    }
+}
+
+@mixin font-35 {
+    font-size: 35px;
+    font-weight: normal;
+
+    @include xl {
+        font-size: 32px;
+    }
+
+    @include lg {
+        font-size: 28px;
+    }
+
+    @include md {
+        font-size: 26px;
+    }
+
+    @include sm {
+        font-size: 22px;
+    }
+}
+
+@mixin font-30 {
+    font-size: 30px;
+    line-height: 140%;
+
+    @include lg {
+        font-size: 26px;
+    }
+
+    @include md {
+        font-size: 22px;
+    }
+
+    @include sm {
+        font-size: 20px;
+    }
+}
+
+@mixin font-28 {
+    font-size: 28px;
+    line-height: normal;
+
+    @include lg {
+        font-size: 26px;
+    }
+
+    @include md {
+        font-size: 22px;
+    }
+
+    @include sm {
+        font-size: 20px;
+    }
+}
+
+@mixin font-22 {
+    font-size: 22px;
+    line-height: 140%;
+
+    @include md {
+        font-size: 20px;
+    }
+
+    @include sm {
+        font-size: 18px;
+    }
+}
+
+@mixin font-24 {
+    font-size: 24px;
+    line-height: 1.5;
+
+    @include lg {
+        font-size: 20px;
+    }
+
+    @include md {
+        font-size: 20px;
+    }
+
+    @include sm {
+        font-size: 18px;
+    }
+}
+@mixin font-18 {
+    font-size: 18px;
+    line-height: calc(27px/18px);
+
+    @include mmd {
+        font-size: 16px;
+    }
+}
+
+@mixin text_ellipsis($count) {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -box-orient: vertical;
+    -webkit-box-orient: vertical;
+    line-clamp: $count;
+    -webkit-line-clamp: $count;
+}
+
+@mixin custom-scroll($inset) {
+    &::-webkit-scrollbar {
+        width: $inset;
+        height: $inset;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: rgba($color: $primary, $alpha: .30);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba($color: $primary, $alpha: .60);
+    }
+}
